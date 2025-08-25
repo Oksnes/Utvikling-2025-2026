@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="code.js" defer></script>
+</head>
+<body>
+    <div class="box">
+
+    <header>
+        <h1>Forms</h1>
+    </header>
+
+    <main>
+        <form id="skjema">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Navnet ditt" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="navn@eksempel.no" required>
+
+            <label for ="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="passord" required>
+
+            <fieldset>
+                <legend>Velg tall</legend>
+                <label><input type="checkbox" name="tall" value="1">1</label>
+                <label><input type="checkbox" name="tall" value="2">2</label>
+                <label><input type="checkbox" name="tall" value="3">3</label>
+                <label><input type="checkbox" name="tall" value="4">4</label>
+                <label><input type="checkbox" name="tall" value="5">5</label>
+            </fieldset>
+
+            <label for="fag">Velg et tall (1-5):</label>
+            <select id="fag" name="fag" required>
+                <option value="matte">matte</option>
+                <option value="norsk">norsk</option>
+                <option value="engelsk">engelsk</option>
+                <option value="naturfag">naturfag</option>
+                <option value="gym">gym</option>
+            </select>
+
+            <label for="melding">Melding:</label>
+            <textarea id="melding" name="melding" rows="4" placeholder="Skriv meldingen din her..."></textarea>
+            
+            <button type="submit">Send</button>
+        </form>
+        <div id="resultat"></div>
+    </main>
+
+    </div>
+
+</body>
+</html>

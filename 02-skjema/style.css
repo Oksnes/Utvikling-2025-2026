@@ -1,0 +1,43 @@
+html body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(143, 143, 180);
+    color : #333;
+}
+
+.box {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 600px;
+    padding: 20px;
+    height: 75%;
+    border: 2px solid #333333;
+}
+
+form {
+    display:grid;
+    gap: 15px;
+    max-width: 520px;
+}
+
+#resultat {
+    visibility:hidden;
+    margin-top: 12px;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="text"], input[type="email"], input[type="password"], select, textarea {
+    padding: 8px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+}
