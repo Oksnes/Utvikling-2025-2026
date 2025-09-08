@@ -22,3 +22,20 @@ body {
     border-radius: 8px;
     cursor: pointer;
 }
+
+#ageVerification {
+    background-color: #4c8baf;
+    color: white;
+    padding: 20px 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 24px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#ageVerificationContainer {
+    display: flex;
+    flex-direction: row;
+}

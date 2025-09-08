@@ -13,3 +13,17 @@ document.getElementById("form1").addEventListener("submit", function(event) {
     // alert("Forskjellen i lengde på navnene er: " + navnforskjell + " bokstaver.");
 
 });
+
+document.getElementById("ageVerification").addEventListener("click", function() {
+    let age = prompt("Skriv inn alderen din:");
+    if (age >= 18) {
+        alert("Du er voksen.");
+        document.getElementById("voksenBilde").src = "erm.png";
+    } else if (age >= 13) {
+        alert("Du er ikke voksen.");
+    } else if (age <= 12) {
+        window.location.href = "https://google.com";
+        // window.close()
+    }
+
+});
