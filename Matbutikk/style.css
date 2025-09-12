@@ -1,0 +1,58 @@
+html, body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #e0e0e0;
+}
+
+main{
+    width: 80%;
+}
+
+h2{
+    text-align: center;
+    padding: 10px;
+}
+
+#handlekurv{
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 20%;
+    height: 100%;
+    background-color: #c0c0c0;
+    box-shadow: -5px 0 5px rgba(0,0,0,0.2);
+    padding: 10px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.vare{
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 25%
+}
+
+#varer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.vare img{
+    max-width: 65%;
+    height: auto;
+}
+
+button {
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1); 
+  border-radius: 4px; 
+  background-color: #5588AA;
+  cursor: pointer;
+}
