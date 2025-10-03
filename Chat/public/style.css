@@ -1,0 +1,110 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f5f7fa;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    min-width: 100vw;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+}
+
+#utskrift {
+    flex: 1;
+    width: 100vw;
+    max-width: none;
+    min-height: 0;
+    padding: 32px 0 0 0;
+    background: #fff;
+    border-radius: 0;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+}
+
+#utskrift div {
+    max-width: 90%;
+    margin-left: 50px;
+    /* align-self: center; */
+    /* background: #e3e8ee; */
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 1rem;
+    color: #222;
+    box-shadow: 0 1px 4px rgba(168,29,36,0.20);
+    border-left: 4px solid #a81d24;
+    border-right: 4px solid #a81d24;
+    margin-bottom: 8px;
+    word-break: break-word;
+}
+
+#skjema {
+    width: 100vw;
+    max-width: none;
+    margin: 0;
+    padding: 24px 0 24px 0;
+    background: #fff;
+    border-radius: 0;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.07);
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    /* justify-content: center; */
+    align-items: center;
+    position: sticky;
+    bottom: 0;
+}
+
+#skjema label {
+    margin-left: 50px;
+    font-weight: 500;
+    color: #a81d24;
+    margin-bottom: 0;
+    margin-right: 6px;
+}
+
+#skjema input {
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.2s;
+    background: #f8fafc;
+    margin-bottom: 0;
+    width: 300px;
+}
+
+#skjema input:focus {
+    border-color: #a81d24;
+    background: #fff;
+}
+
+#skjema button {
+    background-color: #a81d24;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+    margin-top: 0;
+}
+
+#skjema button:hover {
+    background-color: #be272f;
+}
+
+h1 {
+    color: #333;
+    margin: 24px auto 0 auto;
+    font-size: 2.2rem;
+    letter-spacing: 1px;
+    text-align: center;
+}
