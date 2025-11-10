@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Hello World!</h1>
+    <div id="utskrift">
+        <!-- Fylles ut av JS-->
+    </div>
+
+    <form id="skjema">
+        <label for="navn">Navn:</label>
+        <input type="text" id="navn" name="navn" required placeholder="Skriv inn navn..."><br>
+
+        <label for="melding">Melding:</label>
+        <input type="text" id="melding" name="melding" required placeholder="Skriv inn melding..."><br>
+
+        <button type="submit">Send melding</button>
+    </form>
+
+
+    <script>
+        // const utskrift = document.getElementById("utskrift");
+
+        async function fetchMeldinger() {
+            const response = await fetch("/hentMeldinger")
+            const meldinger = await response.json();
+            const meldingContainer = document.getElementById("utskrift");
+            meldingContainer.innerHTML = "";
+            // console.log(meldinger);
+
+            for (let melding of meldinger) {
+                // console.log(melding.Navn);
+                const div = document.createElement("div");
+                div.innerHTML = "[" + melding.Tid + "]<br> " + melding.Navn + ": " + melding.Innhold;
+                utskrift.appendChild(div);
+            }
+        };
+
+        const skjema = document.getElementById("skjema").addEventListener("submit", sendMelding);
+        const navnEl = document.getElementById("navn");
+        const meldingEl = document.getElementById("melding");
+
+        async function sendMelding(e){
+            e.preventDefault(); // Forhindre at siden refresher
+
+            const navn = navnEl.value.trim();
+            const melding = meldingEl.value.trim();
+            let now = new Date();
+        let tid = now.getFullYear() + "-" +
+            String(now.getMonth() + 1).padStart(2, '0') + "-" +
+            String(now.getDate()).padStart(2, '0') + " " +
+            String(now.getHours()).padStart(2, '0') + ":" +
+            String(now.getMinutes()).padStart(2, '0') + ":" +
+            String(now.getSeconds()).padStart(2, '0');
+
+            const res = await fetch("leggMelding", {
+                method: "POST",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify({ navn, melding, tid})
+            });
+
+            fetchMeldinger();
+            meldingEl.value = "";
+        }
+
+
+        fetchMeldinger();
+    </script>
+</body>
+
+</html>
