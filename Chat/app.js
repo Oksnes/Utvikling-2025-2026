@@ -53,7 +53,7 @@ app.use(session({
 }));
 
 function requireLogin(req, res, next) {
-  if (!req.session.user) { //Se om bruker er logget inn
+  if (!req.session.User) { //Se om bruker er logget inn
       return res.redirect("/login.html"); //send til login siden hvis du ikke er logget inn
   }
   next();
@@ -141,9 +141,58 @@ app.post("/logout", (req, res) => { //DENNE KODEN BRUKER JEG IKKE NÅ
   res.json({ message: "Du er logget ut" });
 });
 
+// Rute for å vise chat.html eller admin (kun for innlogga brukarar)
+app.get("/chat", requireLogin,(req, res) => { 
+  const UserID = req.session.User.id;
+  const admin = db.prepare('SELECT * FROM User WHERE UserID = ?').get(UserID) // Hent admin-status fra databasen
+  if (admin.Admin == 1) {
+    res.sendFile(__dirname + "/secure/admin.html"); // Hvis brukeren er admin, send dem til admin-siden
+  } else {
+    return res.redirect("/chat.html"); // Ellers send dem til chat-siden
+  }
+});
 
+app.post('/channel', (req, res) => {
+  const { ChannelName } = req.body;
+  const stmt = db.prepare('INSERT INTO Channel (ChannelName) VALUES (?)');
+  stmt.run(ChannelName);
+  res.sendStatus(200);
+});
 
+app.get('/channel', (req, res) => {
+  const stmt = db.prepare('SELECT * FROM Channel');
+  const Channel = stmt.all();
+  res.json(Channel);
+});
 
+app.post('/Channel/:ChannelID/Messages', (req, res) => {
+  const UserID = req.session.User?.id; // Hent bruker-ID fra session
+  const { Content, ImagePath } = req.body; // Hent tekst og bilde-URL fra forespørselen
+  const { ChannelID } = req.params;
+
+  if (!UserID || !ChannelID || (!Content && !ImagePath)) {
+    return res.status(400).json({ message: "Manglende data for å sende melding" });
+  }
+
+  const stmt = db.prepare('INSERT INTO Messages (UserID, ChannelID, Content, ImagePath) VALUES (?, ?, ?, ?)');
+  stmt.run(UserID, ChannelID, Content || null, ImagePath || null);
+
+  res.sendStatus(200);
+});
+
+app.get('/Channel/:ChannelID/Messages', (req, res) => {
+  const { ChannelID } = req.params;
+
+  const stmt = db.prepare(`
+    SELECT Messages.Content, Messages.ImagePath, User.Username, User.ProfilePicture, Messages.Time
+    FROM Messages
+    JOIN User ON Messages.UserID = User.UserID
+    WHERE Messages.ChannelID = ?
+  `);
+  const Messages = stmt.all(ChannelID);
+
+  res.json(Messages);
+});
 
 //åpner port på serveren
 app.listen(PORT, () => {
