@@ -56,7 +56,7 @@ main {
 #messages-container {
     max-height: 80%;
     height: 600px;
-    overflow-y: hidden;
+    overflow-y: auto;
     margin-bottom: 10px;
     text-align: left;
     padding-left: 10px;
@@ -139,7 +139,7 @@ label {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    overflow: hidden;
+    overflow: auto;
     text-align: left;
     width: 100%; /* ensure it fills the grid column */
     max-width: none;
