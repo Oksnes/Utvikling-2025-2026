@@ -60,7 +60,7 @@ async function fetchMessages(currentChannelID) {
             const messageImage = document.createElement('img');
             messageImage.src = msg.ImagePath;
             messageImage.alt = 'Image sent in chat';
-            messageImage.style.maxWidth = '250px';
+            messageImage.style.maxWidth = '750px';
             messageImage.style.maxHeight = '250px';
             messageImage.style.display = 'block';
             messageImage.style.marginTop = '10px';
@@ -81,5 +81,39 @@ document.getElementById('channel-select').addEventListener('change', (e) => {
     fetchMessages(currentChannelID);
 });
 
+document.getElementById('send-button').addEventListener('click', async (event) => {
+  event.preventDefault();
+
+  const messageInput = document.getElementById('message-input');
+  const imageInput = document.getElementById('image-input'); // forventes <input type="file" id="image-input">
+  const Content = messageInput.value.trim();
+  const imageFile = imageInput.files && imageInput.files[0] ? imageInput.files[0] : null;
+    let now = new Date();
+    let Time = now.getFullYear() + "-" +
+    String(now.getMonth() + 1).padStart(2, '0') + "-" +
+    String(now.getDate()).padStart(2, '0') + " " +
+    String(now.getHours()).padStart(2, '0') + ":" +
+    String(now.getMinutes()).padStart(2, '0') + ":" +
+    String(now.getSeconds()).padStart(2, '0');
+
+  if (!Content && !imageFile) return; // Unngå å sende tomme meldinger
+
+  const formData = new FormData();
+  if (Content) formData.append('Content', Content);
+  if (imageFile) formData.append('Image', imageFile);
+
+  await fetch(`/Channel/${currentChannelID}/Messages`, {
+      method: 'POST',
+      body: formData
+  });
+
+  messageInput.value = '';
+  imageInput.value = '';
+  fetchMessages(currentChannelID);
+});
+
 fetchChannels();
-fetchMessages(currentChannelID);
+
+setInterval(() => {
+    fetchMessages(currentChannelID);
+}, 5000);

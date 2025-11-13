@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
         // Create unique filename with original extension
         const ext = path.extname(file.originalname);
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, 'profile-' + uniqueSuffix + ext);
+        cb(null, 'Multer-Image-' + uniqueSuffix + ext);
     }
 });
 
@@ -165,17 +165,26 @@ app.get('/channel', (req, res) => {
   res.json(Channel);
 });
 
-app.post('/Channel/:ChannelID/Messages', (req, res) => {
-  const UserID = req.session.User?.id; // Hent bruker-ID fra session
-  const { Content, ImagePath } = req.body; // Hent tekst og bilde-URL fra forespørselen
-  const { ChannelID } = req.params;
+app.post('/Channel/:ChannelID/Messages', upload.single('Image'), (req, res) => {
+    const UserID = req.session.User?.id; // Hent bruker-ID fra session
+    const { Content } = req.body; // Hent tekst fra forespørselen
+    const { ChannelID } = req.params;
+    let now = new Date();
+    let Time = now.getFullYear() + "-" +
+    String(now.getMonth() + 1).padStart(2, '0') + "-" +
+    String(now.getDate()).padStart(2, '0') + " " +
+    String(now.getHours()).padStart(2, '0') + ":" +
+    String(now.getMinutes()).padStart(2, '0') + ":" +
+    String(now.getSeconds()).padStart(2, '0');
 
-  if (!UserID || !ChannelID || (!Content && !ImagePath)) {
+  if (!UserID || !ChannelID || (!Content && !req.file)) {
     return res.status(400).json({ message: "Manglende data for å sende melding" });
   }
 
-  const stmt = db.prepare('INSERT INTO Messages (UserID, ChannelID, Content, ImagePath) VALUES (?, ?, ?, ?)');
-  stmt.run(UserID, ChannelID, Content || null, ImagePath || null);
+  const ImagePath = req.file ? `/Images/${req.file.filename}` : null;
+
+  const stmt = db.prepare('INSERT INTO Messages (UserID, ChannelID, Content, ImagePath, Time) VALUES (?, ?, ?, ?, ?)');
+  stmt.run(UserID, ChannelID, Content || null, ImagePath, Time);
 
   res.sendStatus(200);
 });
